@@ -1,0 +1,27 @@
+name: Build EC200U LED Blink Firmware
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup ARM GCC Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+      - name: Build firmware
+        run: |
+          sudo apt update
+          sudo apt install make -y
+          make
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: update_app.bin
+          path: update_app.bin
