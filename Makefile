@@ -2,7 +2,7 @@ TARGET = update_app.bin
 CC = arm-none-eabi-gcc
 CFLAGS = -mcpu=cortex-m3 -mthumb -Os
 
-SRC = src/main.c
+SRC = src/main.c src/syscalls.c
 
 all: $(TARGET)
 
