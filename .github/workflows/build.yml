@@ -21,7 +21,7 @@ jobs:
           make
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: update_app.bin
           path: update_app.bin
