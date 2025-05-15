@@ -1,16 +1,27 @@
-name: Test Upload Artifact
+name: Build EC200U LED Blink Firmware
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Create dummy file
-        run: echo "test" > test.txt
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2.3.1
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup ARM GCC Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+      - name: Build firmware
+        run: |
+          sudo apt update
+          sudo apt install make -y
+          make
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
         with:
-          name: test-artifact
-          path: test.txt
+          name: update_app.bin
+          path: update_app.bin
