@@ -1,15 +1,12 @@
-TARGET = update_app
+TARGET = update_app.bin
 CC = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
-CFLAGS = -mcpu=cortex-a7 -mthumb -O2 -std=c99
+CFLAGS = -mcpu=cortex-m3 -mthumb -Os
 
-all: $(TARGET).bin
+all: $(TARGET)
 
-$(TARGET).elf: src/main.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(TARGET).bin: $(TARGET).elf
-	$(OBJCOPY) -O binary $< $@
+$(TARGET): main.c
+	$(CC) $(CFLAGS) -o update_app.elf main.c
+	arm-none-eabi-objcopy -O binary update_app.elf $(TARGET)
 
 clean:
-	rm -f *.elf *.bin
+	rm -f *.o *.elf *.bin
